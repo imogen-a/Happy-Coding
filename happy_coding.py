@@ -57,7 +57,7 @@ def show_instructions():
     print(instruction)
     login()
     
-        
+    print(guide)
 
 
 start()
