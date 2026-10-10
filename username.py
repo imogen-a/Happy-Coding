@@ -35,3 +35,19 @@ while True:
         print(error)
 
 
+# Storing registered usernames -
+registered_users = [username]
+
+# Enter the username - 
+def login_username():
+    username = input("Enter your Username: ").strip().lower()
+
+    if username in registered_users:
+        print(f"Welcome back, {username}!")
+        return username
+    else:
+        print("Username not found. Please try again.")
+        return None
+
+login_username()
+
