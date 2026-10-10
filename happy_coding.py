@@ -56,25 +56,8 @@ def show_instructions():
 
     print(instruction)
     login()
-
-def login():
-    terminalcleared()
-    print("Please enter your username")
-    guide = """
-        ================
-             LOG IN
-        ================
-
-        Do you have a username?
-        Type Y for yes
-        Type N for no
-        
-        ===================
-        """
     
     print(guide)
-    
-
 
 
 start()
