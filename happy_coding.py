@@ -2,6 +2,7 @@ import pyfiglet
 import os
 import subprocess
 from termcolor import colored
+from google import genai
 
 prohibited_usernames = {
     "admin", "administrator", "root", "support", "moderator", "sysadmin", "hostmaster", "postmaster", "api", "www", "ftp", "dns", "http", "mailto", "ssl", "localhost", "abuse", "security", "spam", "spamtrap", "mailer-daemon", "snapchat", "instagram"
@@ -118,6 +119,7 @@ def register_user():
     username = input("Create a New Username: ")
     username = create_username(username)
     print(f"Username: '{username}' Has been created successfully.")
+    return username
           
 
 
@@ -135,7 +137,117 @@ def login_username():
 
 
 def questions():
-    pass
+    
+    print("Welcome to Happy Coding!")
+
+    level = input(
+        "Choose assessment level:\n"
+        "1. Beginner\n"
+        "2. Intermediate\n"
+        "3. Advanced\n"
+    )
+
+    if level == "1":
+        difficulty = "Beginner"
+    elif level == "2":
+        difficulty = "Intermediate"
+    elif level == "3":
+        difficulty = "Advanced"
+    else:
+        print("Invalid choice. Defaulting to Beginner.")
+        difficulty = "Beginner"
+
+    print(f"\nStarting {difficulty} Assessment...")
+
+    client = genai.Client(api_key="AQ.Ab8RN6KZXcListEzSHN8ctMeUQYneDSrVDYJQOnmDnvvInXUsw")
+
+    response = client.models.generate_content(
+        model="gemini-3.8-flash",
+        contents=f"""
+    Create 20 {difficulty} coding multiple-choice questions.
+
+    Use a mixture of:
+    - Multiple Choice
+    - True or False
+    - Fill in the Blank
+
+    Format each question as follows:
+
+    Question Type: Multiple Choice
+
+    Question: ...
+    A) ...
+    B) ...
+    C) ...
+    D) ...
+    Correct Answer: X
+
+    ###
+
+    Question Type: True/False
+
+    Question: ...
+    Correct Answer: True
+
+    ###
+
+    Question Type: Fill in the Blank
+
+    Question: Complete the code:
+    for i in ______(5):
+    Correct Answer: range
+
+    ###
+
+    Separate each question with ###.
+    """
+    )
+
+    questions = response.text.split("###")
+
+    score = 0
+
+    for question_num, question in enumerate(questions, start=1):
+
+        if not question.strip():
+            continue
+
+        print(f"\nQuestion {question_num}/20")
+        print(question)
+
+        answer = input("Your answer (A/B/C/D): ").strip().upper()
+
+        try:
+            correct_answer = (
+                question.split("Correct Answer:")[1]
+                .strip()[0]
+                .upper()
+            )
+
+            if answer == correct_answer:
+                score += 1
+                print("✅ Correct!")
+            else:
+                print(f"❌ Incorrect. Correct answer: {correct_answer}")
+
+        except Exception:
+            print("⚠ Could not determine correct answer.")
+
+    print("\nAssessment Complete!")
+    print(f"Final Score: {score}/20")
+
+    if score <= 7:
+        result_level = "Beginner"
+    elif score <= 14:
+        result_level = "Intermediate"
+    else:
+        result_level = "Advanced"
+
+    with open("results.txt", "a") as file:
+        file.write(f" {score}/20, {result_level}\n")
+
+    print("Results saved!")
+    print("Your coding level:", result_level)
 
 
 start()
