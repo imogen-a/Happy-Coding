@@ -1,17 +1,20 @@
 import pyfiglet
+import os
+import subprocess
 from termcolor import colored
 
-def start():
-    #display welcome banner
-    #welcome images
-    fonts = ["slant"]
+def terminalcleared():
+    if os.name == "nt":
+        cmd = "cls"
+    else: 
+        cmd = 'clear'
+        subprocess.call(cmd, shell=True)    
 
-    for f in fonts:
-        text = pyfiglet.figlet_format("Welcome To Happy Coding!", font=f)
-        colored_text = colored(text, 'cyan')
-        print(f"\nFont: {f}\n")
-        print(colored_text)
+def start():
+    text = pyfiglet.figlet_format("Welcome To Happy Coding!", font="slant")
+    print(colored(text, "yellow"))
     startoptions()
+    
     
 
 
@@ -25,11 +28,13 @@ def startoptions():
         login()
     else:
         print("Invalid input. Please retype your choice\n")
-        startoptions()
+        return startoptions()
+       
 
 
     
 def show_instructions():
+    terminalcleared()
     instruction = """
     =================================
          HOW TO USE HAPPY CODING
@@ -53,6 +58,7 @@ def show_instructions():
     login()
 
 def login():
+    terminalcleared()
     print("Please enter your username")
     
 
