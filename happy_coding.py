@@ -1,15 +1,14 @@
-import keyboard
 
 def start():
     #display welcome banner
     #welcome images
-    print("Welcome to Happy Coding!\n\n\n")
+    print("Welcome to Happy Coding!\n")
     startoptions()
     
-   
+
 
 def startoptions():
-    print("----> Type i and then press enter to view instructions \n----> Type c and then press enter to continue \n\n")
+    print("""----> Type i and then press enter to view instructions \n----> Type c and then press enter to continue \n\n""")
     response = input()
     if response == "i" or response == "I":
         features()
@@ -18,13 +17,15 @@ def startoptions():
     else:
         print("Invalid input. Please retype your choice\n")
         startoptions()
-    
+
+
 
 def features():
-    print("instructions w/ log in/cre")
+    print("instructions w/ log in option at bottom")
     login()
 
 def login():
-    print("log in")
+    print("Please enter your username")
+    
 
 start()
