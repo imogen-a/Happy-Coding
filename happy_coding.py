@@ -110,7 +110,7 @@ def create_username(username):
         if word in username:
             raise ValueError(f"The username contains a prohibited word: '{word}'. Please choose a different username.")
     
-    return(username)
+    return username
 
 
     
@@ -119,7 +119,7 @@ def register_user():
     username = input("Create a New Username: ")
     username = create_username(username)
     print(f"Username: '{username}' Has been created successfully.")
-    return username
+    return questions(username)
           
 
 
@@ -129,16 +129,17 @@ def login_username():
 
     if username in registered_users:
         print(f"Welcome back, {username}!")
-        return username
+        questions()
+        return questions(username)
     else:
         print("Username not found. Please create a username.")
         return register_user()
 
 
 
-def questions():
+def questions(username):
     
-    print("Welcome to Happy Coding!")
+    print("Welcome to Happy Coding!" + username)
 
     level = input(
         "Choose assessment level:\n"
@@ -244,7 +245,7 @@ def questions():
         result_level = "Advanced"
 
     with open("results.txt", "a") as file:
-        file.write(f" {score}/20, {result_level}\n")
+        file.write(f"{username}, {score}/20, {result_level}\n")
 
     print("Results saved!")
     print("Your coding level:", result_level)
